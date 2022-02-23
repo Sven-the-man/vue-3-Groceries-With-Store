@@ -2,13 +2,16 @@ import {reactive, computed} from 'vue';
 import {withState} from './helper';
 
 const state = reactive({
-    posts: ['post 1', 'post 2', 'post 3', 'post 4'],
+    groceries: [
+        {name: 'Appels', price: 1.8, amount: 4},
+        {name: 'Bananen', price: 1.3, amount: 3},
+    ],
 });
 
 //getters
-const postsCount = computed(() => state.posts.length);
+const groceries = computed(() => state.groceries);
 
-//setters
-const insertPost = post => state.posts.push(post);
+//setters(?)
+// const insertPost = post => state.posts.push(post);
 
-export default () => withState({postsCount, insertPost}, state);
+export default () => withState({groceries}, state);
