@@ -1,7 +1,7 @@
 <template>
-    <MyGroceries />
+    <GroceryList />
 </template>
 
 <script setup>
-import MyGroceries from './components/MyGroceries.vue';
+import GroceryList from './components/GroceryList.vue';
 </script>
