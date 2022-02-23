@@ -1,11 +1,14 @@
-import {reactive, readonly} from 'vue';
+import {reactive, computed} from 'vue';
+import {withState} from './helper';
 
 const state = reactive({
-    count: 0,
+    posts: ['post 1', 'post 2', 'post 3', 'post 4'],
 });
 
-const increment = function () {
-    state.count++;
-};
+//getters
+const postsCount = computed(() => state.posts.length);
 
-export default {state: readonly(state), increment};
+//setters
+const insertPost = post => state.posts.push(post);
+
+export default () => withState({postsCount, insertPost}, state);
