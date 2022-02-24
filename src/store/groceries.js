@@ -1,17 +1,11 @@
-import {reactive, computed} from 'vue';
-import {withState} from './helper';
+import {reactive} from 'vue';
 
 const state = reactive({
     groceries: [
-        {name: 'Appels', price: 1.8, amount: 4},
-        {name: 'Bananen', price: 1.3, amount: 3},
+        {name: 'Appels', price: 1.82, amount: 4},
+        {name: 'Bananen', price: 1.32, amount: 3},
+        {name: 'Peren', price: 1.38, amount: 5},
     ],
 });
 
-//getters
-const groceries = computed(() => state.groceries);
-
-//setters(?)
-// const insertPost = post => state.posts.push(post);
-
-export default () => withState({groceries}, state);
+export const getGroceries = state.groceries;
