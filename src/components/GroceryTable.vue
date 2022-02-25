@@ -7,16 +7,19 @@
                     <th>Hoeveelheid</th>
                     <th>Prijs</th>
                     <th>Subtotaal</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
+                <AddGroceryColumn />
                 <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
                     <td>{{ grocery.name }}</td>
                     <td>
                         <NumberInput v-model.number="grocery.amount" />
                     </td>
-                    <td><NumberInput v-model.number="grocery.price" /></td>
+                    <td>{{ grocery.price }}</td>
                     <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
+                    <td><button @click="removeGroceryFromList(index)">Verwijder</button></td>
                 </tr>
                 <tr class="grand-total">
                     <td colspan="3">Totaalbedrag:</td>
@@ -28,11 +31,13 @@
 </template>
 
 <script setup>
-import {getGroceries} from '../store/groceries.js';
+import {getGroceriesFromStore, removeGroceryFromList} from '../store/groceries.js';
+import AddGroceryColumn from './AddGroceryColumn.vue';
 import NumberInput from './forms/NumberInput.vue';
-import {reactive, computed} from '@vue/reactivity';
+import {reactive, computed, ref} from '@vue/reactivity';
 
-const groceries = reactive([...getGroceries]);
+const groceries = reactive([...getGroceriesFromStore]);
+
 
 const grandTotal = computed(() =>
     groceries
@@ -44,9 +49,7 @@ const grandTotal = computed(() =>
 </script>
 
 <style scoped>
-.new-grocery {
-    text-align: center;
-}
+
 
 .styled-table {
     border-collapse: collapse;
@@ -61,7 +64,7 @@ const grandTotal = computed(() =>
 .styled-table thead tr {
     background-color: #009879;
     color: #ffffff;
-    text-align: left;
+    text-align: center;
 }
 .styled-table th,
 .styled-table td {

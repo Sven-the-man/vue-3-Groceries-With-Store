@@ -3,9 +3,13 @@ import {reactive} from 'vue';
 const state = reactive({
     groceries: [
         {name: 'Appels', price: 1.82, amount: 4},
-        {name: 'Bananen', price: 1.32, amount: 3},
-        {name: 'Peren', price: 1.38, amount: 5},
+        {name: 'Peren', price: 1.66, amount: 3},
+        
     ],
 });
 
-export const getGroceries = state.groceries;
+export const getGroceriesFromStore = state.groceries;
+
+export const removeGroceryFromList = (index) => state.groceries.slice(index, 1);
+
+export const addGroceryToList = (grocery) => state.groceries.push(grocery);
