@@ -1,16 +1,16 @@
 <template>
     <tr>
-        <td> <input id="name" v-model="grocery.name" type="text" /></td>
+        <td><input id="name" v-model="grocery.name" type="text" /></td>
         <td><input id="amount" v-model="grocery.amount" type="number" /></td>
         <td><input id="price" v-model="grocery.price" type="number" /></td>
-        <td></td>
+        <td />
         <td><button @click="addGrocery">Stuur op!</button></td>
     </tr>
 </template>
 
 <script setup>
 import {reactive} from 'vue';
-import {addGroceryToList} from '../store/groceries';
+import {addGroceryToList} from '/src/store/groceries.js';
 
 const grocery = reactive({
     name: null,
@@ -19,7 +19,6 @@ const grocery = reactive({
 });
 
 const addGrocery = () => {
-    
     if (!grocery.name) return;
     if (!grocery.amount) return;
     if (!grocery.price) return;

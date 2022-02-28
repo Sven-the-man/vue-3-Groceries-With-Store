@@ -7,7 +7,7 @@
                     <th>Hoeveelheid</th>
                     <th>Prijs</th>
                     <th>Subtotaal</th>
-                    <th></th>
+                    <th />
                 </tr>
             </thead>
             <tbody>
@@ -32,12 +32,11 @@
 
 <script setup>
 import {getGroceriesFromStore, removeGroceryFromList} from '../store/groceries.js';
-import AddGroceryColumn from './AddGroceryColumn.vue';
+import AddGroceryColumn from './forms/AddGroceryColumn.vue';
 import NumberInput from './forms/NumberInput.vue';
 import {reactive, computed, ref} from '@vue/reactivity';
 
 const groceries = reactive([...getGroceriesFromStore]);
-
 
 const grandTotal = computed(() =>
     groceries
@@ -49,8 +48,6 @@ const grandTotal = computed(() =>
 </script>
 
 <style scoped>
-
-
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
