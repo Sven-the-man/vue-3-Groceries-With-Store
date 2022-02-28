@@ -14,7 +14,8 @@
                 <AddGrocery />
                 <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
                     <td>
-                        {{ grocery.name }}
+                        <div v-if="!grocery.editable">{{grocery.name}}</div>
+                        <div v-if="grocery.editable"><input type="text" :placeholder="grocery.name"></div>
                     </td>
                     <td>
                         <AmountInput v-model.number="grocery.amount" />
@@ -23,12 +24,16 @@
                         <PriceInput v-model.number="grocery.price" />
                     </td>
                     <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
+                    <td >
+                        <button @click="enterEditMode(grocery)" v-if="!grocery.editable">Pas aan</button>
+                        <button v-if="grocery.editable">Sla op</button>
+                    </td>
                     <td><button @click="removeGroceryFromList(index)">Verwijder</button></td>
-                    <td><button>Pas aan</button></td>
                 </tr>
                 <tr class="grand-total">
                     <td colspan="3">Totaalbedrag:</td>
                     <td>{{ grandTotal }},-</td>
+                    <td />
                 </tr>
             </tbody>
         </table>
@@ -51,6 +56,11 @@ const grandTotal = computed(() =>
         }, 0)
         .toFixed(2),
 );
+
+function enterEditMode(grocery) {
+    return grocery.editable = true;
+}
+
 </script>
 
 <style scoped>

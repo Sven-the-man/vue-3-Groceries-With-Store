@@ -12,12 +12,15 @@
 
 <script setup>
 import {reactive} from 'vue';
-import {addGroceryToList} from '/src/store/groceries.js';
+import {addGroceryToList, getGroceriesFromStore} from '/src/store/groceries.js';
+const groceries = reactive(getGroceriesFromStore);
 
 const grocery = reactive({
+    id: groceries.length,
     name: null,
     price: null,
     amount: null,
+    editable: false,
 });
 
 const addGrocery = () => {
@@ -28,5 +31,6 @@ const addGrocery = () => {
     grocery.name = null;
     grocery.price = null;
     grocery.amount = null;
+    grocery.id = groceries.length;
 };
 </script>
