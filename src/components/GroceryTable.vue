@@ -11,15 +11,20 @@
                 </tr>
             </thead>
             <tbody>
-                <AddGroceryColumn />
+                <AddGrocery />
                 <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
-                    <td>{{ grocery.name }}</td>
                     <td>
-                        <NumberInput v-model.number="grocery.amount" />
+                        {{ grocery.name }}
                     </td>
-                    <td>{{ grocery.price }}</td>
+                    <td>
+                        <AmountInput v-model.number="grocery.amount" />
+                    </td>
+                    <td>
+                        <PriceInput v-model.number="grocery.price" />
+                    </td>
                     <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
                     <td><button @click="removeGroceryFromList(index)">Verwijder</button></td>
+                    <td><button>Pas aan</button></td>
                 </tr>
                 <tr class="grand-total">
                     <td colspan="3">Totaalbedrag:</td>
@@ -32,11 +37,12 @@
 
 <script setup>
 import {getGroceriesFromStore, removeGroceryFromList} from '../store/groceries.js';
-import AddGroceryColumn from './forms/AddGroceryColumn.vue';
-import NumberInput from './forms/NumberInput.vue';
-import {reactive, computed, ref} from '@vue/reactivity';
+import AddGrocery from './forms/AddGrocery.vue';
+import AmountInput from './forms/AmountInput.vue';
+import PriceInput from './forms/PriceInput.vue';
+import {reactive, computed} from '@vue/reactivity';
 
-const groceries = reactive([...getGroceriesFromStore]);
+const groceries = reactive(getGroceriesFromStore);
 
 const grandTotal = computed(() =>
     groceries

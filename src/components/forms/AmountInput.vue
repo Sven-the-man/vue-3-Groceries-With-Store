@@ -20,6 +20,6 @@ const update = event => {
 
 <style scoped>
 input[type='number'] {
-    width: 40px;
+    width: 50px;
 }
 </style>
