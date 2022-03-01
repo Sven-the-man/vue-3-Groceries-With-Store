@@ -3,7 +3,7 @@
         <td>
             <div v-if="!grocery.editable">{{ grocery.name }}</div>
             <div v-if="grocery.editable">
-                <input v-model="editedGrocery.name" type="text" :placeholder="grocery.name" />
+                <NameInput v-model="editedGrocery.name" />
             </div>
         </td>
         <td>
@@ -24,13 +24,13 @@
         <td>{{ grandTotal }},-</td>
         <td />
     </tr>
-    <button @click="callGroceries">Call groceries</button>
 </template>
 
 <script setup>
-import {getGroceriesFromStore, removeGroceryFromList, editGroceryFromList, callGroceries} from '../store/groceries.js';
-import AmountInput from './forms/AmountInput.vue';
-import PriceInput from './forms/PriceInput.vue';
+import {getGroceriesFromStore, removeGroceryFromList, editGroceryFromList} from '../store/groceries.js';
+import AmountInput from './inputs/Amount.vue';
+import PriceInput from './inputs/Price.vue';
+import NameInput from './inputs/Name.vue';
 import {reactive, computed} from '@vue/reactivity';
 
 const groceries = reactive(getGroceriesFromStore);
@@ -54,8 +54,8 @@ const enterEditMode = grocery => {
     return (grocery.editable = true);
 };
 
-const editGrocery = (id, editedGrocery, grocery) => {
-    editGroceryFromList(id, editedGrocery);
+const editGrocery = (id, {...editedGrocery}, grocery) => {
+    editGroceryFromList(id, {...editedGrocery});
     grocery.editable = false;
     editedGrocery.name = null;
 };

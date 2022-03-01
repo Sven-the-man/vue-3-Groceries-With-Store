@@ -1,10 +1,8 @@
 <template>
     <tr>
-        <td><input id="name" v-model="grocery.name" type="text" placeholder="Product naam" /></td>
-        <td><input id="amount" v-model="grocery.amount" type="number" placeholder="0" min="0" max="999" step="1" /></td>
-        <td>
-            <input id="price" v-model="grocery.price" type="number" placeholder="0" min="0" max="999" step="0.01" />
-        </td>
+        <td><NameInput v-model="grocery.name" /></td>
+        <td><AmountInput v-model.number="grocery.amount" /></td>
+        <td><PriceInput v-model.number="grocery.price" /></td>
         <td />
         <td><button @click="addGrocery">Stuur op!</button></td>
     </tr>
@@ -12,6 +10,10 @@
 
 <script setup>
 import {reactive} from 'vue';
+import AmountInput from '../inputs/AmountInput.vue';
+import NameInput from '../inputs/NameInput.vue';
+import PriceInput from '../inputs/PriceInput.vue';
+
 import {addGroceryToList, getGroceriesFromStore} from '/src/store/groceries.js';
 const groceries = reactive(getGroceriesFromStore);
 

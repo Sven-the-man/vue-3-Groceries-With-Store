@@ -18,5 +18,3 @@ export const editGroceryFromList = (id, editedGrocery) => {
     editedGrocery.id = id;
     state.groceries[foundIndex] = editedGrocery;
 };
-
-export const callGroceries = () => console.log(state.groceries);
