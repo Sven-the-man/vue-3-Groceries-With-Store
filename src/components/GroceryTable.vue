@@ -16,8 +16,8 @@
         <td>
             <button v-if="!grocery.editable" @click="enterEditMode(grocery)">Pas aan</button>
             <button v-if="grocery.editable" @click="editGrocery(grocery.id, editedGrocery, grocery)">Sla op</button>
+            <button @click="removeGroceryFromList(index)">Verwijder</button>
         </td>
-        <td><button @click="removeGroceryFromList(index)">Verwijder</button></td>
     </tr>
     <tr class="grand-total">
         <td colspan="3">Totaalbedrag:</td>
@@ -44,19 +44,19 @@ const grandTotal = computed(() =>
 );
 
 const editedGrocery = reactive({
-    name: 'Hardcoded text',
+    name: null,
     amount: 0,
     price: 0,
     editable: false,
 });
 
-function enterEditMode(grocery) {
+const enterEditMode = grocery => {
     return (grocery.editable = true);
-}
+};
 
-function editGrocery(id, editedGrocery, grocery) {
+const editGrocery = (id, editedGrocery, grocery) => {
     editGroceryFromList(id, editedGrocery);
     grocery.editable = false;
     editedGrocery.name = null;
-}
+};
 </script>
