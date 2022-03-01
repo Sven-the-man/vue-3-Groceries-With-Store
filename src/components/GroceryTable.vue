@@ -1,48 +1,34 @@
 <template>
-    <div class="grocery-table">
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Hoeveelheid</th>
-                    <th>Prijs</th>
-                    <th>Subtotaal</th>
-                    <th />
-                </tr>
-            </thead>
-            <tbody>
-                <AddGrocery />
-                <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
-                    <td>
-                        <div v-if="!grocery.editable">{{grocery.name}}</div>
-                        <div v-if="grocery.editable"><input type="text" :placeholder="grocery.name"></div>
-                    </td>
-                    <td>
-                        <AmountInput v-model.number="grocery.amount" />
-                    </td>
-                    <td>
-                        <PriceInput v-model.number="grocery.price" />
-                    </td>
-                    <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
-                    <td >
-                        <button @click="enterEditMode(grocery)" v-if="!grocery.editable">Pas aan</button>
-                        <button v-if="grocery.editable">Sla op</button>
-                    </td>
-                    <td><button @click="removeGroceryFromList(index)">Verwijder</button></td>
-                </tr>
-                <tr class="grand-total">
-                    <td colspan="3">Totaalbedrag:</td>
-                    <td>{{ grandTotal }},-</td>
-                    <td />
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
+        <td>
+            <div v-if="!grocery.editable">{{ grocery.name }}</div>
+            <div v-if="grocery.editable">
+                <input v-model="editedGrocery.name" type="text" :placeholder="grocery.name" />
+            </div>
+        </td>
+        <td>
+            <AmountInput v-model.number="grocery.amount" />
+        </td>
+        <td>
+            <PriceInput v-model.number="grocery.price" />
+        </td>
+        <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
+        <td>
+            <button v-if="!grocery.editable" @click="enterEditMode(grocery)">Pas aan</button>
+            <button v-if="grocery.editable" @click="editGrocery(grocery.id, editedGrocery, grocery)">Sla op</button>
+        </td>
+        <td><button @click="removeGroceryFromList(index)">Verwijder</button></td>
+    </tr>
+    <tr class="grand-total">
+        <td colspan="3">Totaalbedrag:</td>
+        <td>{{ grandTotal }},-</td>
+        <td />
+    </tr>
+    <button @click="callGroceries">Call groceries</button>
 </template>
 
 <script setup>
-import {getGroceriesFromStore, removeGroceryFromList} from '../store/groceries.js';
-import AddGrocery from './forms/AddGrocery.vue';
+import {getGroceriesFromStore, removeGroceryFromList, editGroceryFromList, callGroceries} from '../store/groceries.js';
 import AmountInput from './forms/AmountInput.vue';
 import PriceInput from './forms/PriceInput.vue';
 import {reactive, computed} from '@vue/reactivity';
@@ -57,52 +43,20 @@ const grandTotal = computed(() =>
         .toFixed(2),
 );
 
+const editedGrocery = reactive({
+    name: 'Hardcoded text',
+    amount: 0,
+    price: 0,
+    editable: false,
+});
+
 function enterEditMode(grocery) {
-    return grocery.editable = true;
+    return (grocery.editable = true);
 }
 
+function editGrocery(id, editedGrocery, grocery) {
+    editGroceryFromList(id, editedGrocery);
+    grocery.editable = false;
+    editedGrocery.name = null;
+}
 </script>
-
-<style scoped>
-.styled-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    margin-left: auto;
-    margin-right: auto;
-}
-.styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: center;
-}
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
-}
-
-.grand-total {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: black;
-    text-align: left;
-}
-</style>

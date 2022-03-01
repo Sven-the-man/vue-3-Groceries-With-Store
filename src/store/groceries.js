@@ -10,10 +10,15 @@ const state = reactive({
 export const getGroceriesFromStore = state.groceries;
 
 export const addGroceryToList = grocery => state.groceries.push(grocery);
+
 export const removeGroceryFromList = index => state.groceries.splice(index, 1);
 
+export function editGroceryFromList(id, editedGrocery) {
+    let foundIndex = state.groceries.findIndex(grocery => grocery.id == id);
+    editedGrocery.id = id;
+    state.groceries[foundIndex] = editedGrocery;
+}
 
-   
-
-
-
+export function callGroceries() {
+    console.log(state.groceries);
+}
