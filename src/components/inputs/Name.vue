@@ -1,11 +1,10 @@
 <template>
-    <input type="text" :value="modelValue" placeholder="Product naam" @input="update" />
+    <input type="text" :value="modelValue" placeholder="Nieuwe boodschap" @input="update" />
 </template>
 
 <script setup>
 defineProps({
     modelValue: {
-        type: String,
         required: true,
     },
 });

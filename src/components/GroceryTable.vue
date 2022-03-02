@@ -7,10 +7,12 @@
             </div>
         </td>
         <td>
-            <AmountInput v-model.number="grocery.amount" />
+            <AmountInput v-if="!grocery.editable" v-model.number="grocery.amount" />
+            <AmountInput v-if="grocery.editable" v-model.number="editedGrocery.amount" />
         </td>
         <td>
-            <PriceInput v-model.number="grocery.price" />
+            <PriceInput v-if="!grocery.editable" v-model.number="grocery.price" />
+            <PriceInput v-if="grocery.editable" v-model.number="editedGrocery.price" />
         </td>
         <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
         <td>
@@ -31,6 +33,7 @@ import {getGroceriesFromStore, removeGroceryFromList, editGroceryFromList} from 
 import AmountInput from './inputs/Amount.vue';
 import PriceInput from './inputs/Price.vue';
 import NameInput from './inputs/Name.vue';
+import Button from './inputs/Button.vue';
 import {reactive, computed} from '@vue/reactivity';
 
 const groceries = reactive(getGroceriesFromStore);
@@ -44,7 +47,7 @@ const grandTotal = computed(() =>
 );
 
 const editedGrocery = reactive({
-    name: null,
+    name: "Nieuwe boodschap",
     amount: 0,
     price: 0,
     editable: false,

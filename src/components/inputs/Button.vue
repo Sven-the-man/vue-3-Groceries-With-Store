@@ -15,9 +15,7 @@ defineProps({
 
 <style scoped>
 .button {
-    margin-top: 25%;
-    margin-bottom: 25%;
-
-    text-align: center;
+   margin: 5px;
+   width: 80px;
 }
 </style>

@@ -5,7 +5,6 @@
 <script setup>
 defineProps({
     modelValue: {
-        type: Number,
         required: true,
     },
 });
