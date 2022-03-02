@@ -14,9 +14,9 @@
         </td>
         <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
         <td>
-            <button v-if="!grocery.editable" @click="enterEditMode(grocery)">Pas aan</button>
-            <button v-if="grocery.editable" @click="editGrocery(grocery.id, editedGrocery, grocery)">Sla op</button>
-            <button @click="removeGroceryFromList(index)">Verwijder</button>
+            <Button v-if="!grocery.editable" @click="enterEditMode(grocery)">Pas aan</Button>
+            <Button v-if="grocery.editable" @click="editGrocery(grocery.id, editedGrocery, grocery)">Sla op</Button>
+            <Button @click="removeGroceryFromList(index)">Verwijder</Button>
         </td>
     </tr>
     <tr class="grand-total">

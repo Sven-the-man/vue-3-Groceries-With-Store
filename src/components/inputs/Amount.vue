@@ -1,5 +1,5 @@
 <template>
-    <input type="number" min="0" max="999" step="1" :value="modelValue" @input="update" />
+    <input type="number" min="0" max="999" step="1" :value="modelValue" placeholder="0" @input="update" />
 </template>
 
 <script setup>
