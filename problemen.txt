@@ -1,2 +1,0 @@
-1. De grocery list is een kopie van de state, deze is niet "reactive"
-2. Toevoegen van grocery resulteert in dat alle groceries hetzelfde gaan heten.
