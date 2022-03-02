@@ -56,6 +56,7 @@ const editedGrocery = reactive({
 const enterEditMode = grocery => {
     groceries.forEach(grocery => grocery.editable = false);
     grocery.editable = true;
+    editedGrocery.name = null;
 };
 
 const editGrocery = (id, {...editedGrocery}, grocery) => {
