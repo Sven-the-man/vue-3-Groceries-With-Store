@@ -1,5 +1,6 @@
 import {reactive} from 'vue';
 
+// TODO :: no need to nest here, state can be groceries
 const state = reactive({
     groceries: [
         {id: 0, name: 'Appels', price: 1.82, amount: 4, editable: false},
