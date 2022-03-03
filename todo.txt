@@ -1,0 +1,3 @@
+Price en amount input naar 1 component, en dan kijken hoe ik verschillende steps krijg.
+Currrency value correct herschrijven.
+Store herschrijven zodat er geen state.groceries maar groceries is.

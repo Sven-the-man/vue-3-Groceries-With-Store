@@ -1,8 +1,8 @@
 <template>
     <tr>
         <td><NameInput v-model="grocery.name" /></td>
-        <td><AmountInput v-model.number="grocery.amount" /></td>
-        <td><PriceInput v-model.number="grocery.price" /></td>
+        <td><NumberInput v-model.number="grocery.amount" :step="1" /></td>
+        <td><NumberInput v-model.number="grocery.price" :step="0.01" /></td>
         <td />
         <td><Button @click="addGrocery">Stuur op!</Button></td>
     </tr>
@@ -10,9 +10,8 @@
 
 <script setup>
 import {reactive} from 'vue';
-import AmountInput from '../inputs/Amount.vue';
 import NameInput from '../inputs/Name.vue';
-import PriceInput from '../inputs/Price.vue';
+import NumberInput from '../inputs/Number.vue';
 import Button from '../inputs/Button.vue';
 import {addGroceryToList, getGroceriesFromStore} from '/src/store/groceries.js';
 

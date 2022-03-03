@@ -1,23 +1,20 @@
 <template>
     <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
         <td>
-            <!-- TODO :: use v-else -->
             <div v-if="!grocery.editable">{{ grocery.name }}</div>
-            <div v-if="grocery.editable">
+            <div v-else>
                 <NameInput v-model="editedGrocery.name" />
             </div>
         </td>
         <td>
-            <!-- TODO :: why is amount editable both times? -->
-            <AmountInput v-if="!grocery.editable" v-model.number="grocery.amount" />
-            <AmountInput v-if="grocery.editable" v-model.number="editedGrocery.amount" />
+            <div v-if="!grocery.editable">{{grocery.amount}}</div>
+            <div v-else><NumberInput v-model.number="editedGrocery.amount" :step="1" /></div>
         </td>
         <td>
-            <!-- TODO :: why is price editable both times? -->
-            <PriceInput v-if="!grocery.editable" v-model.number="grocery.price" />
-            <PriceInput v-if="grocery.editable" v-model.number="editedGrocery.price" />
+            <div v-if="!grocery.editable">{{'\u20AC' + grocery.price.toFixed(2)}}</div>
+            <div v-else><NumberInput v-model.number="editedGrocery.price" :step="0.01" /></div>
         </td>
-        <td>{{ (grocery.amount * grocery.price).toFixed(2) }},-</td>
+        <td>{{ '\u20AC' + (grocery.amount * grocery.price).toFixed(2) }}</td>
         <td>
             <Button v-if="!grocery.editable" @click="enterEditMode(grocery)">Pas aan</Button>
             <Button v-if="grocery.editable" @click="editGrocery(grocery.id, editedGrocery, grocery)">Sla op</Button>
@@ -26,17 +23,14 @@
     </tr>
     <tr class="grand-total">
         <td colspan="3">Totaalbedrag:</td>
-        <!-- TODO :: this can be the result: 9.84,-. That's not a correct currency value -->
-        <td>{{ grandTotal }},-</td>
+        <td>{{ grandTotal }}</td>
         <td />
     </tr>
 </template>
 
 <script setup>
 import {getGroceriesFromStore, removeGroceryFromList, editGroceryFromList} from '../store/groceries.js';
-// TODO :: no need for amountinput and priceinput when there is only one difference between the two
-import AmountInput from './inputs/Amount.vue';
-import PriceInput from './inputs/Price.vue';
+import NumberInput from './inputs/Number.vue';
 import NameInput from './inputs/Name.vue';
 import Button from './inputs/Button.vue';
 import {reactive, computed} from '@vue/reactivity';
@@ -44,15 +38,15 @@ import {reactive, computed} from '@vue/reactivity';
 const groceries = reactive(getGroceriesFromStore);
 
 const grandTotal = computed(() =>
-    groceries
+'\u20AC' +(groceries
         .reduce((total, {price, amount}) => {
             return (total += price * amount);
         }, 0)
-        .toFixed(2),
-);
+        .toFixed(2))
+); 
 
 const editedGrocery = reactive({
-    name: 'Nieuwe boodschap',
+    name: null,
     amount: 0,
     price: 0,
     editable: false,
@@ -61,8 +55,9 @@ const editedGrocery = reactive({
 const enterEditMode = grocery => {
     groceries.forEach(grocery => (grocery.editable = false));
     grocery.editable = true;
-    // TODO :: set name to grocery being edited, need to type the name again, even if we don't want to change it
-    editedGrocery.name = null;
+    editedGrocery.name = grocery.name;
+    editedGrocery.amount = grocery.amount;
+    editedGrocery.price = grocery.price;
 };
 
 // TODO :: too much unpacking

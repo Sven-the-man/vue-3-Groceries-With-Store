@@ -1,5 +1,5 @@
 <template>
-    <input type="number" min="0" max="999" step="1" :value="modelValue" placeholder="0" @input="update" />
+    <input type="number" min="0" max="999" :step="step" placeholder="0" @input="update" />
 </template>
 
 <script setup>
@@ -7,6 +7,8 @@ defineProps({
     modelValue: {
         required: true,
     },
+    step: {},
+    
 });
 
 const emit = defineEmits(['update:modelValue']);

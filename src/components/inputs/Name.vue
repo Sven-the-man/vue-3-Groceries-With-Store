@@ -1,5 +1,5 @@
 <template>
-    <input type="text" :value="modelValue" placeholder="Boodschap naam" @input="update" />
+    <input type="text" :value="modelValue" placeholder="Nieuwe boodschap naam:" @input="update" />
 </template>
 
 <script setup>
