@@ -60,8 +60,7 @@ const enterEditMode = grocery => {
     editedGrocery.price = grocery.price;
 };
 
-// TODO :: too much unpacking
-const editGrocery = (id, {...editedGrocery}, grocery) => {
+const editGrocery = (id, editedGrocery, grocery) => {
     editGroceryFromList(id, {...editedGrocery});
     grocery.editable = false;
     editedGrocery.name = null;
