@@ -5,6 +5,7 @@
 </template>
 
 <script setup>
+// TODO :: useless prop
 defineProps({
     onClick: {
         type: Function,
@@ -15,7 +16,7 @@ defineProps({
 
 <style scoped>
 .button {
-   margin: 5px;
-   width: 80px;
+    margin: 5px;
+    width: 80px;
 }
 </style>

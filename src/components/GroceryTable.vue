@@ -1,16 +1,19 @@
 <template>
     <tr v-for="(grocery, index) in groceries" :key="index" class="active-row">
         <td>
+            <!-- TODO :: use v-else -->
             <div v-if="!grocery.editable">{{ grocery.name }}</div>
             <div v-if="grocery.editable">
                 <NameInput v-model="editedGrocery.name" />
             </div>
         </td>
         <td>
+            <!-- TODO :: why is amount editable both times? -->
             <AmountInput v-if="!grocery.editable" v-model.number="grocery.amount" />
             <AmountInput v-if="grocery.editable" v-model.number="editedGrocery.amount" />
         </td>
         <td>
+            <!-- TODO :: why is price editable both times? -->
             <PriceInput v-if="!grocery.editable" v-model.number="grocery.price" />
             <PriceInput v-if="grocery.editable" v-model.number="editedGrocery.price" />
         </td>
@@ -23,6 +26,7 @@
     </tr>
     <tr class="grand-total">
         <td colspan="3">Totaalbedrag:</td>
+        <!-- TODO :: this can be the result: 9.84,-. That's not a correct currency value -->
         <td>{{ grandTotal }},-</td>
         <td />
     </tr>
@@ -30,6 +34,7 @@
 
 <script setup>
 import {getGroceriesFromStore, removeGroceryFromList, editGroceryFromList} from '../store/groceries.js';
+// TODO :: no need for amountinput and priceinput when there is only one difference between the two
 import AmountInput from './inputs/Amount.vue';
 import PriceInput from './inputs/Price.vue';
 import NameInput from './inputs/Name.vue';
@@ -47,18 +52,20 @@ const grandTotal = computed(() =>
 );
 
 const editedGrocery = reactive({
-    name: "Nieuwe boodschap",
+    name: 'Nieuwe boodschap',
     amount: 0,
     price: 0,
     editable: false,
 });
 
 const enterEditMode = grocery => {
-    groceries.forEach(grocery => grocery.editable = false);
+    groceries.forEach(grocery => (grocery.editable = false));
     grocery.editable = true;
+    // TODO :: set name to grocery being edited, need to type the name again, even if we don't want to change it
     editedGrocery.name = null;
 };
 
+// TODO :: too much unpacking
 const editGrocery = (id, {...editedGrocery}, grocery) => {
     editGroceryFromList(id, {...editedGrocery});
     grocery.editable = false;
